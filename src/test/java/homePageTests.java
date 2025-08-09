@@ -4,13 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class homePage_Test {
+public class homePageTests {
 
     @BeforeAll
     public static void driverExist() {
-        if (!webDriverSetup.webDriverExists()) {
-            webDriverSetup.createWebDriver();
-        }
+        webDriverSetup.createWebDriver();
     }
 
     @AfterAll
@@ -20,9 +18,10 @@ public class homePage_Test {
 
     @Test
     public void openingMainPageTest() {
-        base_Page.openLink(base_Page.mainPage, webDriverSetup.driver);
+        basePage.openLink(basePage.mainPage, webDriverSetup.driver);
+
         String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(base_Page.mainPage));
+        assertTrue(pageUrl.contains(basePage.mainPage));
     }
 
 }
