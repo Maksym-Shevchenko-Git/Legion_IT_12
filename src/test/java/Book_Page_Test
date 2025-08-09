@@ -1,0 +1,11 @@
+
+public class lesson11_2_Test {
+    public final String mainPage = "https://daviktapes.com/";
+    private static WebDriver chromeDriver;
+    private WebDriverWait wait;
+public class bookPage_Test(){
+@BeforeAll
+public void openMainPage(){}
+
+
+}
