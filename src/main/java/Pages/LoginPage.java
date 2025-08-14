@@ -1,18 +1,18 @@
-import Pages.BasePage;
+package Pages;
+
 import config.Consts;
 import config.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class loginPage {
-
+public class LoginPage {
     public static final String incorrectLogin = "incorrectLogin@gggle.kon";
     public static final String incorrectPassword = "error404password";
 
-    public static void goToLoginPage() {
-        BasePage.openLink(Consts.mainPage, WebDriver.driver);
+    public static final String loginButtonXpath = "//a[contains(@href, '/account/login')]";
 
-        WebElement loginButton = WebDriver.driver.findElement(By.xpath("//a[contains(@href, '/account/login')]"));
+    public static void goToLoginPage() {
+        WebElement loginButton = WebDriver.driver.findElement(By.xpath(loginButtonXpath));
         loginButton.click();
     }
 }

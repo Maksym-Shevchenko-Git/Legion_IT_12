@@ -1,42 +1,55 @@
+import Pages.BasePage;
+import Pages.BookPage;
+import config.Consts;
+import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class bookPageTests {
+public class BookPageTests {
     @BeforeAll
     public static void driverExist() {
-        webDriverSetup.createWebDriver();
+        WebDriver.createWebDriver();
     }
 
     @AfterAll
     public static void closeDriver() {
-        webDriverSetup.closeWebDriver();
+        WebDriver.closeWebDriver();
     }
 
     @Test
-    public void openEnglishOnlyPage() {
-        bookPage.openEnglishOnlyPage();
+    public void openEnglishOnlyPageTest() {
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        BasePage.closeAdvWindow();
+        BookPage.selectEnglishBookCollection();
 
-        String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(bookPage.englishOnlyPage));
+        String pageUrl = WebDriver.driver.getCurrentUrl();
+        assertTrue(pageUrl.contains(Consts.ENGLISHONLYPAGEURL));
     }
 
     @Test
-    public void openBookPage() {
-        bookPage.openBookPage();
+    public void openBookPageTest() {
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        BasePage.closeAdvWindow();
+        BookPage.selectEnglishBookCollection();
+        BookPage.openBookPage();
 
-        String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(bookPage.linkOfBook));
+        String pageUrl = WebDriver.driver.getCurrentUrl();
+        assertTrue(pageUrl.contains(Consts.BOOKURL));
     }
 
     @Test
-    public void addBookToCard() {
-        bookPage.addBookToCard();
+    public void addBookToCardTest() {
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        BasePage.closeAdvWindow();
+        BookPage.selectEnglishBookCollection();
+        BookPage.openBookPage();
+        BookPage.addBookToCard();
 
-        String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(cartPage.cartPageLink));
+        String pageUrl = WebDriver.driver.getCurrentUrl();
+        assertTrue(pageUrl.contains(Consts.CARTPAGEURL));
     }
 }
 

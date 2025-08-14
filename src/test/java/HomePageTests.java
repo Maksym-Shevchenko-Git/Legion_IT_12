@@ -1,27 +1,30 @@
+import Pages.BasePage;
+import config.Consts;
+import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class homePageTests {
+public class HomePageTests {
 
     @BeforeAll
     public static void driverExist() {
-        webDriverSetup.createWebDriver();
+        WebDriver.createWebDriver();
     }
 
     @AfterAll
     public static void closeDriver() {
-        webDriverSetup.closeWebDriver();
+        WebDriver.closeWebDriver();
     }
 
     @Test
     public void openingMainPageTest() {
-        basePage.openLink(basePage.mainPage, webDriverSetup.driver);
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
 
-        String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(basePage.mainPage));
+        String pageUrl = WebDriver.driver.getCurrentUrl();
+        assertTrue(pageUrl.contains(Consts.MAINPAGEURL));
     }
 
 }

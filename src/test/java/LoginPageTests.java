@@ -1,3 +1,7 @@
+import Pages.BasePage;
+import Pages.LoginPage;
+import config.Consts;
+import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -7,59 +11,65 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class loginPageTests {
+public class LoginPageTests {
+    public static final String customerEmailXpath = "CustomerEmail";
+    public static final String customerPasswordXpath = "CustomerPassword";
+    public static final String submitButtonXpath = "//input[contains(@type, 'submit')]";
+    public static final String captchaFrameXpath = "iframe[src*='hcaptcha']";
 
     @BeforeAll
     public static void driverExist() {
-        webDriverSetup.createWebDriver();
+        WebDriver.createWebDriver();
     }
 
     @AfterAll
     public static void closeDriver() {
-        webDriverSetup.closeWebDriver();
+        WebDriver.closeWebDriver();
     }
 
     @Test
     public void loginScreen() {
-        loginPage.goToLoginPage();
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        LoginPage.goToLoginPage();
 
-        String pageUrl = webDriverSetup.driver.getCurrentUrl();
-        assertTrue(pageUrl.contains(loginPage.loginPage));
+        String pageUrl = WebDriver.driver.getCurrentUrl();
+        assertTrue(pageUrl.contains(Consts.LOGINPAGEURL));
     }
 
     @Test
     public void emptyLoginPasswordTest() {
-        loginPage.goToLoginPage();
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        LoginPage.goToLoginPage();
 
-        WebElement customerEmail = webDriverSetup.driver.findElement(By.id("CustomerEmail"));
+        WebElement customerEmail = WebDriver.driver.findElement(By.id(customerEmailXpath));
         customerEmail.clear();
 
-        WebElement customerPassword = webDriverSetup.driver.findElement(By.id("CustomerPassword"));
+        WebElement customerPassword = WebDriver.driver.findElement(By.id(customerPasswordXpath));
         customerPassword.clear();
 
-        WebElement submitButton = webDriverSetup.driver.findElement(By.xpath("//input[contains(@type, 'submit')]"));
+        WebElement submitButton = WebDriver.driver.findElement(By.xpath(submitButtonXpath));
         submitButton.click();
 
-        WebElement captchaFrame = webDriverSetup.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("iframe[src*='hcaptcha']")));
+        WebElement captchaFrame = WebDriver.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(captchaFrameXpath)));
 
         assertTrue(captchaFrame.getSize().getHeight() > 0 && captchaFrame.getSize().getWidth() > 0);
     }
 
-
     @Test
     public void incorrectLoginPasswordTest() {
-        loginPage.goToLoginPage();
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        LoginPage.goToLoginPage();
 
-        WebElement submitButton = webDriverSetup.driver.findElement(By.xpath("//input[contains(@type, 'submit')]"));
+        WebElement customerEmail = WebDriver.driver.findElement(By.id(customerEmailXpath));
+        customerEmail.sendKeys(LoginPage.incorrectLogin);
+
+        WebElement customerPassword = WebDriver.driver.findElement(By.id(customerPasswordXpath));
+        customerPassword.sendKeys(LoginPage.incorrectPassword);
+
+        WebElement submitButton = WebDriver.driver.findElement(By.xpath(submitButtonXpath));
         submitButton.click();
 
-        WebElement customerEmail = webDriverSetup.driver.findElement(By.id("CustomerEmail"));
-        customerEmail.sendKeys(loginPage.incorrectLogin);
-
-        WebElement customerPassword = webDriverSetup.driver.findElement(By.id("CustomerPassword"));
-        customerPassword.sendKeys(loginPage.incorrectPassword);
-
-        WebElement captchaFrame = webDriverSetup.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("iframe[src*='hcaptcha']")));
+        WebElement captchaFrame = WebDriver.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(captchaFrameXpath)));
 
         assertTrue(captchaFrame.getSize().getHeight() > 0 && captchaFrame.getSize().getWidth() > 0);
     }

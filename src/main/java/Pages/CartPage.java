@@ -1,3 +1,6 @@
+package Pages;
+
+import config.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -5,37 +8,38 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class cartPage {
-    public static final String cartPageLink = "https://kidkiddos.com/cart";
+public class CartPage {
+    public static final String quantityOfBookXpath = "//input[contains(@class, 'cart__qty-input')]";
+    public static final String updateButtonXpath = "//input[contains(@class, 'btn btn--secondary cart__update cart__update--large small--hide')]";
+    public static final String newTotalXpath = "//span[contains(@class, 'money skiptranslate notranslate') and ancestor::td[contains(@class, 'text-right small--hide')]]";
+
     public static final String newQ = "6";
 
     public static String cleanPrice(String priceText) {
         return priceText.replaceAll("[^\\d.]", "");
     }
 
-    public static Map<String, String> updateCard() {
+    public static Map<String, Double> updateCard() {
 
-        Map<String, String> newCart = new HashMap<>();
+        Map<String, Double> newCart = new HashMap<>();
 
-        bookPage.addBookToCard();
+        WebElement quantityOfBookElement = WebDriver.driver.findElement(By.xpath(quantityOfBookXpath));
+        quantityOfBookElement.clear();
+        quantityOfBookElement.sendKeys(newQ);
 
-        WebElement quantityOfBook = webDriverSetup.driver.findElement(By.xpath("//input[contains(@class, 'cart__qty-input')]"));
-        quantityOfBook.clear();
-        quantityOfBook.sendKeys(newQ);
-
-        WebElement updateButton = webDriverSetup.driver.findElement(By.xpath("//input[contains(@class, 'btn btn--secondary cart__update cart__update--large small--hide')]"));
+        WebElement updateButton = WebDriver.driver.findElement(By.xpath(updateButtonXpath));
         updateButton.click();
 
-        webDriverSetup.getWait(10).until(ExpectedConditions.attributeToBe(By.xpath("//input[contains(@class, 'cart__qty-input')]"), "value", newQ));
+        WebDriver.getWait(10).until(ExpectedConditions.attributeToBe(By.xpath(quantityOfBookXpath), "value", newQ));
 
-        quantityOfBook = webDriverSetup.driver.findElement(By.xpath("//input[contains(@class, 'cart__qty-input')]"));
-        String newQuantityOfBookValue = quantityOfBook.getAttribute("value");
+        quantityOfBookElement = WebDriver.driver.findElement(By.xpath(quantityOfBookXpath));
+        String newQuantity = quantityOfBookElement.getAttribute("value");
 
-        WebElement newTotal = webDriverSetup.driver.findElement(By.xpath("//span[contains(@class, 'money skiptranslate notranslate') and ancestor::td[contains(@class, 'text-right small--hide')]]"));
-        String newTotalValue = basePage.js.executeScript("return arguments[0].textContent;", newTotal).toString();
+        WebElement newTotalElement = WebDriver.driver.findElement(By.xpath(newTotalXpath));
+        String newTotal = BasePage.js.executeScript("return arguments[0].textContent;", newTotalElement).toString();
 
-        newCart.put("newQuantityOfBook", newQuantityOfBookValue);
-        newCart.put("newTotalValue", newTotalValue);
+        newCart.put("newQuantity", Double.parseDouble(newQuantity));
+        newCart.put("newTotal", Double.parseDouble(CartPage.cleanPrice(newTotal)));
 
         return newCart;
 

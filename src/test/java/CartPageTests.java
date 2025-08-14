@@ -1,3 +1,8 @@
+import Pages.BasePage;
+import Pages.BookPage;
+import Pages.CartPage;
+import config.Consts;
+import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -6,22 +11,29 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class cartPageTests {
+public class CartPageTests {
+
     @BeforeAll
     public static void driverExist() {
-        webDriverSetup.createWebDriver();
+        WebDriver.createWebDriver();
     }
 
     @AfterAll
     public static void closeDriver() {
-        webDriverSetup.closeWebDriver();
+        WebDriver.closeWebDriver();
     }
 
     @Test
-    public void updateCard() {
-        Map cart = cartPage.updateCard();
+    public void updateCartTest() {
+        BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
+        BasePage.closeAdvWindow();
+        BookPage.selectEnglishBookCollection();
+        BookPage.openBookPage();
+        BookPage.addBookToCard();
 
-        assertEquals(cart.get("newQuantityOfBook"), cartPage.newQ);
-        assertEquals(Double.parseDouble(cartPage.cleanPrice(cart.get("newTotalValue").toString())),  Double.parseDouble(cartPage.newQ) * bookPage.bookPrice);
+        Map cart = CartPage.updateCard();
+
+        assertEquals(cart.get("newQuantity"), Double.parseDouble(CartPage.newQ));
+        assertEquals(cart.get("newTotal"), Double.parseDouble(CartPage.newQ) * BookPage.bookPrice);
     }
 }
