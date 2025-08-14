@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import config.WebDriver;
 import org.openqa.selenium.By;

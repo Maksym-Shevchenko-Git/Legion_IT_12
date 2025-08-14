@@ -1,6 +1,6 @@
-import Pages.BasePage;
-import Pages.BookPage;
-import Pages.CartPage;
+import pages.BasePage;
+import pages.BookPage;
+import pages.CartPage;
 import config.Consts;
 import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;

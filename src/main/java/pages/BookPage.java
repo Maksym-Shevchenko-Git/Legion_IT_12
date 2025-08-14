@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import config.Consts;
 import config.WebDriver;

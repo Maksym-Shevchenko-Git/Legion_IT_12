@@ -1,6 +1,5 @@
-package Pages;
+package pages;
 
-import config.Consts;
 import config.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

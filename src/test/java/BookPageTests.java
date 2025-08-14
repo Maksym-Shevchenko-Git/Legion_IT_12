@@ -1,5 +1,5 @@
-import Pages.BasePage;
-import Pages.BookPage;
+import pages.BasePage;
+import pages.BookPage;
 import config.Consts;
 import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;

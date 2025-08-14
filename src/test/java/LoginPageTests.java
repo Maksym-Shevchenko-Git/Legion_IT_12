@@ -1,5 +1,5 @@
-import Pages.BasePage;
-import Pages.LoginPage;
+import pages.BasePage;
+import pages.LoginPage;
 import config.Consts;
 import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;

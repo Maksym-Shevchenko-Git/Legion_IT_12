@@ -1,4 +1,4 @@
-import Pages.BasePage;
+import pages.BasePage;
 import config.Consts;
 import config.WebDriver;
 import org.junit.jupiter.api.AfterAll;
