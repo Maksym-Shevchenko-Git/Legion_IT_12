@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
+import static config.WebDriver.findWebElement;
+
 public class BookPage {
     public static Double bookPrice;
     public static final String defaultQuantity = "5";
@@ -21,13 +23,13 @@ public class BookPage {
     public static final String addToCartXpath = "AddToCart-product-template";
 
     public static void selectEnglishBookCollection() {
-        WebElement dropdownMenu = WebDriver.driver.findElement(By.xpath(dropDownMenuXpath));
+        WebElement dropdownMenu = findWebElement(dropDownMenuXpath);
         dropdownMenu.click();
 
         By dropdownContainerLocator = By.id(dropdownContainerLocatorXpath);
         WebDriver.getWait(10).until(ExpectedConditions.visibilityOfElementLocated(dropdownContainerLocator));
 
-        WebElement englishOnlyItem = WebDriver.driver.findElement(By.xpath(englishOnlyItemXpath));
+        WebElement englishOnlyItem = findWebElement(englishOnlyItemXpath);
         BasePage.js.executeScript("arguments[0].click();", englishOnlyItem);
     }
 
@@ -37,19 +39,19 @@ public class BookPage {
     }
 
     public static void addBookToCard() {
-        WebElement formatBook = WebDriver.driver.findElement(By.id(formatBookXpath));
+        WebElement formatBook = findWebElement(formatBookXpath);
         Select formatSelect = new Select(formatBook);
         formatSelect.selectByVisibleText("Hardcover");
 
-        WebElement priceText = WebDriver.driver.findElement(By.xpath(priceTextXpath));
+        WebElement priceText = findWebElement(priceTextXpath);
 
         BookPage.bookPrice = Double.parseDouble(CartPage.cleanPrice(priceText.getText()));
 
-        WebElement quantityOfBook = WebDriver.driver.findElement(By.id(quantityOfBookXpath));
+        WebElement quantityOfBook = findWebElement(quantityOfBookXpath);
         quantityOfBook.clear();
         quantityOfBook.sendKeys(defaultQuantity);
 
-        WebElement addToCart = WebDriver.driver.findElement(By.id(addToCartXpath));
+        WebElement addToCart = findWebElement(addToCartXpath);
         addToCart.click();
     }
 }

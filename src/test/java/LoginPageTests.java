@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static config.WebDriver.findWebElement;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginPageTests {
@@ -41,13 +42,13 @@ public class LoginPageTests {
         BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
         LoginPage.goToLoginPage();
 
-        WebElement customerEmail = WebDriver.driver.findElement(By.id(customerEmailXpath));
+        WebElement customerEmail = findWebElement(customerEmailXpath);
         customerEmail.clear();
 
-        WebElement customerPassword = WebDriver.driver.findElement(By.id(customerPasswordXpath));
+        WebElement customerPassword = findWebElement(customerPasswordXpath);
         customerPassword.clear();
 
-        WebElement submitButton = WebDriver.driver.findElement(By.xpath(submitButtonXpath));
+        WebElement submitButton = findWebElement(submitButtonXpath);
         submitButton.click();
 
         WebElement captchaFrame = WebDriver.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(captchaFrameXpath)));
@@ -60,13 +61,13 @@ public class LoginPageTests {
         BasePage.openLink(Consts.MAINPAGEURL, WebDriver.driver);
         LoginPage.goToLoginPage();
 
-        WebElement customerEmail = WebDriver.driver.findElement(By.id(customerEmailXpath));
+        WebElement customerEmail = findWebElement(customerEmailXpath);
         customerEmail.sendKeys(LoginPage.incorrectLogin);
 
-        WebElement customerPassword = WebDriver.driver.findElement(By.id(customerPasswordXpath));
+        WebElement customerPassword = findWebElement(customerPasswordXpath);
         customerPassword.sendKeys(LoginPage.incorrectPassword);
 
-        WebElement submitButton = WebDriver.driver.findElement(By.xpath(submitButtonXpath));
+        WebElement submitButton = findWebElement(submitButtonXpath);
         submitButton.click();
 
         WebElement captchaFrame = WebDriver.getWait(15).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(captchaFrameXpath)));

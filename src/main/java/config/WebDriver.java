@@ -1,6 +1,8 @@
 package config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,8 +27,11 @@ public class WebDriver {
             driver.quit();
         }
     }
+
+    public static WebElement findWebElement(String locator) {
+        if (locator.startsWith("/") || locator.startsWith("./") || locator.startsWith("(")) {
+            return driver.findElement(By.xpath(locator));
+        }
+        return driver.findElement(By.id(locator));
+    }
 }
-
-
-
-
